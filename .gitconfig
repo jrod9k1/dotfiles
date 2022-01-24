@@ -1,0 +1,26 @@
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[user]
+	name = Gerard Russell
+	email = gr@jrod.sh
+[alias]
+	hist = log --graph --decorate --pretty=oneline --abbrev-commit
+	hista = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	ps = push
+	pl = pull --all
+	c = commit -m
+	s = status
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
+	co = checkout
+	cl = clone
+	st = status -sb
+	unstage = reset HEAD --
+	dc = diff --cached
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+[push]
+	default = simple
+[core]
+	trustctime = false
