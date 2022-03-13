@@ -21,7 +21,7 @@ plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="$HOME/.scripts:$PATH"
+export PATH="$HOME/.scripts/bin:$PATH"
 
 ###############################
 ### handy aliases & related ###
