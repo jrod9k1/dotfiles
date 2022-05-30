@@ -43,7 +43,6 @@ if(Get-Module -Name PSReadline){
     
     if($psrVer.Major -eq 2 -and $psrVer.Minor -gt 0){
         Set-PSReadLineOption -PredictionSource History
-        Set-PSReadLineOption -PredictionViewStyle InlineView
     }
     
     Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
