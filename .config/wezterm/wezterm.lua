@@ -1,22 +1,22 @@
 local wezterm = require 'wezterm';
 
 -- TODO: this sucks, probably some better way to do this
-local pg = wezterm.font_with_fallback{"PragmataPro Liga", "Consolas"};
+local pg = wezterm.font_with_fallback{"PragmataPro Mono", "Consolas"};
 local pg_bold = wezterm.font_with_fallback{
-    {family = "PragmataPro Liga", weight = "Bold"},
+    {family = "PragmataPro Mono", weight = "Bold"},
     "Consolas"
 };
 local pg_italic = wezterm.font_with_fallback{
-    {family = "PragmataPro Liga", italic = true},
+    {family = "PragmataPro Mono", italic = true},
     "Consolas"
 };
 local pg_bolditalic = wezterm.font_with_fallback{
-    {family = "PragmataPro Liga", weight = "Bold", italic = true},
+    {family = "PragmataPro Mono", weight = "Bold", italic = true},
     "Consolas"
 };
 
 local wezconfig = {
-    font = wezterm.font("PragmataPro Liga"),
+    font = wezterm.font("PragmataPro Mono"),
     font = pg,
     font_size = 11.0,
     
@@ -31,7 +31,7 @@ local wezconfig = {
 
     launch_menu = {},
 
-    -- tmux like keys for pweanes
+    -- tmux like keys for panes
     leader = {key = "s", mods = "CTRL"},
     keys = {
         {key = '"',             mods = "LEADER|SHIFT",  action = wezterm.action{SplitVertical = {domain = "CurrentPaneDomain"}}},
@@ -44,6 +44,11 @@ local wezconfig = {
 
         {key = "z",             mods = "LEADER",        action = "TogglePaneZoomState"},
         {key = "x",             mods = "LEADER",        action = wezterm.action{CloseCurrentPane={confirm = true}}},
+
+        {key = "t",             mods = "CTRL|SHIFT",    action = wezterm.action{SpawnTab = "CurrentPaneDomain"}},
+        {key = "w",             mods = "CTRL|SHIFT",    action = wezterm.action{CloseCurrentTab = {confirm = true}}},
+        {key = "RightArrow",    mods = "CTRL|SHIFT",    action = wezterm.action{ActivateTabRelative = 1}},
+        {key = "LeftArrow",     mods = "CTRL|SHIFT",    action = wezterm.action{ActivateTabRelative = -1}},
     },
 
     foreground_text_hsb = {
