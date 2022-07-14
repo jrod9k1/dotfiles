@@ -1,0 +1,6 @@
+cargo
+vim
+zsh
+wget
+htop
+git
