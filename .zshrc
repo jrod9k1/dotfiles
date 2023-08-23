@@ -14,7 +14,7 @@ if [[ ! -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]]; then;
 fi
 
 # Configuration Junk
-ZSH_THEME="gianu"
+ZSH_THEME="flazz"
 export UPDATE_ZSH_DAYS=20
 COMPLETION_WAITING_DOTS="true"
 plugins=(git zsh-autosuggestions)
@@ -34,7 +34,8 @@ alias heroute="telnet route-server.he.net"
 alias attroute="telnet route-server.ip.att.net"
 alias ports="lsof -n -i4TCP | grep LISTEN"
 alias 🚒="echo "Stay 100, stay lit boys and girls"; halt -f"
-alias l="ls -lah"
+alias l="lsd -lah"
+alias ll="ls -lah"
 alias ipinfo="curl ipinfo.io"
 alias g="git"
 $ ipi () { curl ipinfo.io/"$@"; }
@@ -45,7 +46,7 @@ alias cent7tools="scl enable evtoolset-7 $SHELL"
 
 alias cfggit='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-export EDITOR="vim"
+export EDITOR="hx"
 
 #############
 ### macOS ###
@@ -92,3 +93,27 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+#
+# tools needed
+#
+# ripgrep (rg)
+# fd
+# lsd
+# zellij
+# bat
+
+hxs() {
+	RG_PREFIX="rg -i --files-with-matches"
+	local files
+	files="$(
+		FZF_DEFAULT_COMMAND_DEFAULT_COMMAND="$RG_PREFIX '$1'" \
+			fzf --multi 3 --print0 --sort --preview="[[ ! -z {} ]] && rg --pretty --ignore-case --context 5 {q} {}" \
+				--phony -i -q "$1" \
+				--bind "change:reload:$RG_PREFIX {q}" \
+				--preview-window="70%:wrap" \
+				--bind 'ctrl-a:select-all'
+	)"
+	[[ "$files" ]] && hx --vsplit $(echo $files | tr \\0 " ")
+}
+
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
