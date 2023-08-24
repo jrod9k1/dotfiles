@@ -105,4 +105,8 @@ hxs() {
 	[[ "$files" ]] && hx --vsplit $(echo $files | tr \\0 " ")
 }
 
+rf() {
+  rg --smart-case $1 --line-number --no-heading | fzf -d ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}' --bind 'f1:become(nvim {1})'
+}
+
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
