@@ -26,6 +26,8 @@ export PATH="$HOME/.scripts/bin:$PATH"
 export LANG=en_US.UTF-8
 export EDITOR="hx"
 export HISTSIZE=100000
+export TERM="xterm-256color" # fix 256 colour rendering
+export COLORTERM=24bit
 
 ###############################
 ### handy aliases & related ###
@@ -69,7 +71,6 @@ fi
 ### boilerplate shit ###
 ########################
 
-export TERM="xterm-256color" # fix 256 colour rendering
 
 if [ $DISPLAY ] && [ -f ~/.Xresources ]; then
     xrdb ~/.Xresources
@@ -107,6 +108,10 @@ hxs() {
 
 rf() {
   rg --smart-case $1 --line-number --no-heading | fzf -d ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}' --bind 'f1:become(nvim {1})'
+}
+
+fingerprint(){
+  ssh-keyscan $1 | ssh-keygen -E md5 -l -f -
 }
 
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
