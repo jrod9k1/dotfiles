@@ -18,8 +18,8 @@
 	st = status -sb
 	unstage = reset HEAD --
 	dc = diff --cached
-    lol = log --graph --decorate --pretty=oneline --abbrev-commit
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    hist = log --graph --decorate --pretty=oneline --abbrev-commit
+    hista = log --graph --decorate --pretty=oneline --abbrev-commit --all
 [push]
 	default = simple
 [core]
@@ -33,3 +33,5 @@
 	conflictstyle = diff3
 [diff]
 	colorMoved = default
+[init]
+	defaultBranch = main
