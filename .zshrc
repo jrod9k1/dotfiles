@@ -23,6 +23,10 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH="$HOME/.scripts/bin:$PATH"
 
+export LANG=en_US.UTF-8
+export EDITOR="hx"
+export HISTSIZE=100000
+
 ###############################
 ### handy aliases & related ###
 ###############################
@@ -42,19 +46,19 @@ $ ipi () { curl ipinfo.io/"$@"; }
 alias hb="du -sh"
 alias hba="du -sh *"
 alias become="sudo -s -u"
-alias cent7tools="scl enable evtoolset-7 $SHELL"
+alias whicos="cat /etc/*release*"
+alias toptenproc="ps aux --sort=-pcpu | head -n11"
+alias psa="ps axo user:20,pid,pcpu,pmem,vsz,rss,tty,stat,start,time,comm,command"
+alias f="fzf --bind 'f1:become(nvim {1})'"
 
 alias cfggit='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-export EDITOR="hx"
 
 #############
 ### macOS ###
 #############
 
 if [ -d "/Volumes" ]; then #Check if we're running macOS
-    # Fixes
-    alias mtr="sudo /usr/local/Cellar/mtr/0.87/sbin/mtr" # Fix brew mtr install
     export BYOBU_PREFIX=/usr/local # Fix byobu bindings
     # Handy Stuff
     alias netwatch="watch -n 1 ifconfig en4"
