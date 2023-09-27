@@ -110,6 +110,25 @@ rf() {
   rg --smart-case $1 --line-number --no-heading | fzf -d ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}' --bind 'f1:become(nvim {1})'
 }
 
+function livegrep(){
+  rg --line-number --no-heading --color=always --smart-case $1 |
+    fzf -d ':' -n 1,3.. --ansi --no-sort --preview 'bat --color=always --highlight-line {2} {1}' --preview-window 'right:50%:+{2}+3/3,~3' \
+    --bind 'f1:become(hx {1}:{2})' \
+    --bind 'f2:become(nvim +{2} {1})' \
+    --bind 'f3:execute(gvim +{2} {1} &)' \
+    --bind 'f5:execute(git lg --color=always {1} | less -r)' \
+    --bind 'f6:execute(git diff --color=always {1} | less -r)'
+}
+
+function livefind(){
+  fd $1 | fzf --ansi --preview 'bat --color=always {1}' \
+  --bind 'f1:become(hx {1})' \
+  --bind 'f2:become(nvim {1})' \
+  --bind 'f3:execute(gvim {1} &)' \
+  --bind 'f5:execute(git lg --color=always {1} | less -r)' \
+  --bind 'f6:execute(git diff --color=always {1} | less -r)'
+}
+
 fingerprint(){
   ssh-keyscan $1 | ssh-keygen -E md5 -l -f -
 }
