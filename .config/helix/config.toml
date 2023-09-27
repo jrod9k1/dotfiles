@@ -1,0 +1,24 @@
+theme = "dark_high_contrast"
+
+[editor]
+cursorline = false
+auto-save = false
+auto-pairs = true
+true-color = true
+
+[editor.cursor-shape]
+insert = "underline"
+normal = "block"
+select = "underline"
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = false
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-type", "total-line-numbers", "file-encoding"]
+center = []
+right = ["selections", "primary-selection-length", "position", "position-percentage", "spacer", "diagnostics", "workspace-diagnostics", "version-control"]
+
+[editor.indent-guides]
+render = true
