@@ -17,6 +17,7 @@ $localAdminCheck = ([Security.Principal.WindowsPrincipal] [Security.Principal.Wi
 if($localAdminCheck){
     New-Item -Path "$HOME\AppData\Roaming" -Name "alacritty" -ItemType Directory -Force
     New-Item -Path "$HOME\Appdata\Roaming\alacritty\alacritty.yml" -Value "$HOME\.alacritty.yml" -ItemType SymbolicLink -Force
+    New-Item -Path "$env:APPDATA\helix\config.toml" -Value "$HOME\.config\helix\config.toml" -ItemType SymbolicLink -Force
 } else{
     Write-Error "This script must be run with local admin rights to symlink the alacritty config. Otherwise you must copy or symlink it manually."
 }
