@@ -20,6 +20,11 @@
 	dc = diff --cached
     hist = log --graph --decorate --pretty=oneline --abbrev-commit
     hista = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	fix = commit --amend
+	remotes = remote -a
+	branches = branch -a --sort=authordate -v
+	discard = checkout --
+	unstage = reset -q HEAD --
 [push]
 	default = simple
 [core]
@@ -27,6 +32,9 @@
 	pager = delta
 [delta]
 	navigate = true
+	light = false
+	hyperlinks = true
+	hyperlinks-file-format = "vscode://file/{path}:{line}"
 [interactive]
 	diffFilter = delta --color-only
 [merge]
