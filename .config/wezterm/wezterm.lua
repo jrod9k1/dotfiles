@@ -7,21 +7,6 @@ local function basename(s)
     return string.gsub(s, "(.*[/\\])(.*)", "%2")
 end
 
--- TODO: this sucks, probably some better way to do this
-local pg = wezterm.font_with_fallback{"PragmataPro Mono", "Consolas"};
-local pg_bold = wezterm.font_with_fallback{
-    {family = "PragmataPro Mono", weight = "Bold"},
-    "Consolas"
-};
-local pg_italic = wezterm.font_with_fallback{
-    {family = "PragmataPro Mono", italic = true},
-    "Consolas"
-};
-local pg_bolditalic = wezterm.font_with_fallback{
-    {family = "PragmataPro Mono", weight = "Bold", italic = true},
-    "Consolas"
-};
-
 local SOLID_LEFT_ARROW = utf8.char(0x30ba)
 local SOLID_LEFT_MOST = utf8.char(0x2588)
 local SOLID_RIGHT_ARROW = utf8.char(0xe0bc)
