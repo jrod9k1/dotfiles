@@ -1,5 +1,7 @@
 local wezterm = require 'wezterm';
 
+-- TODO: add 
+
 -- equivalent to POSIX basename(3)
 -- given "/foo/bar" returns "bar"
 -- given "C:\\foo\\bar" returns "bar"
@@ -116,6 +118,8 @@ local wezconfig = {
         {key = "w",             mods = "CTRL|SHIFT",    action = wezterm.action{CloseCurrentTab = {confirm = true}}},
         {key = "RightArrow",    mods = "CTRL|SHIFT",    action = wezterm.action{ActivateTabRelative = 1}},
         {key = "LeftArrow",     mods = "CTRL|SHIFT",    action = wezterm.action{ActivateTabRelative = -1}},
+
+        {key = "a",             mods = "CTRL|SHIFT",    action = wezterm.action.ShowLauncher},
     },
 
     foreground_text_hsb = {
@@ -131,8 +135,8 @@ local wezconfig = {
     },
 
     -- alacritty-like line spacing, must be in increments of 0.1
-    line_height = 0.9,
-    cell_width = 0.8,
+    --line_height = 0.9,
+    --cell_width = 0.8,
 
     -- "Hyper"-like colour scheme
     colors = {
@@ -199,7 +203,7 @@ local wezconfig = {
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
     wezconfig.default_prog = {"pwsh"}
 
-    table.insert(wezconfig.launch_menu, {label = "Ubuntu", args = {"ubuntu.exe"}})
+    table.insert(wezconfig.launch_menu, {label = "WSL", args = {"wsl.exe"}})
 
     table.insert(wezconfig.launch_menu, {label = "PowerShell 7", args = {"pwsh.exe"}})
     table.insert(wezconfig.launch_menu, {label = "PowerShell 5", args = {"powershell.exe"}})
