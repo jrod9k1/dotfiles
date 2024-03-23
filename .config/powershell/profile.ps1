@@ -46,18 +46,25 @@ function global:prompt{
     return " "
 }
 
-function global:cfggit {git --git-dir=$HOME/.cfg/ --work-tree=$HOME $args}
-function global:anyonehome{Invoke-Command -ComputerName $args -ScriptBlock {quser}}
-function global:showme{(Get-Command $args).ScriptBlock | gvim -}
-function global:l{ls -Force $args[0]}
-function global:steamdir{cd F:\Steam\steamapps\common}
-function global:steamdiralt{cd 'C:\Program Files (x86)\Steam\steamapps\common'}
-function global:e{explorer $args[0]}
-function global:setpublicmac{
+function cfggit {git --git-dir=$HOME/.cfg/ --work-tree=$HOME $args}
+function anyonehome {Invoke-Command -ComputerName $args -ScriptBlock {quser}}
+function showme {(Get-Command $args).ScriptBlock | gvim -}
+function l {ls -Force $args[0]}
+function steamdir {cd F:\Steam\steamapps\common}
+function steamdiralt {cd 'C:\Program Files (x86)\Steam\steamapps\common'}
+function e {explorer $args[0]}
+function setpublicmac{
     Get-VM -Name $args[0] | Get-NetworkAdapter | ? NetworkName -like "VM*" | Set-NetworkAdapter -MacAddress $args[1]
 }
 
 function dumpcmd { (Get-Command $args).ScriptBlock | bat.exe --paging=never -l powershell }
+
+function lsh {
+    Get-ChildItem $args `
+    | Select-Object Mode,LastWriteTime,@{Name="SizeMB";Expression={$_.Length / 1MB}},Name
+}
+
+New-Alias -Name which -Value Get-Command
 
 function .. {cd ..}
 function .. {cd ..\..}
@@ -94,8 +101,7 @@ if(Get-Module -Name PSReadline){
     Set-PSReadLineOption @PSReadlineOptions
     
     $psrVer = (Get-Module PSReadline).Version
-    
-    if($psrVer.Major -eq 2 -and $psrVer.Minor -gt 0){
+    if($psrVer -ge [version]"2.1"){
         Set-PSReadLineOption -PredictionSource History
     }
     
