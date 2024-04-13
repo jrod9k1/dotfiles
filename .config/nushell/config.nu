@@ -839,3 +839,6 @@ $env.config = {
         }
     ]
 }
+
+use ~/.config/nushell/starship.nu
+source ~/.config/nushell/atuin.nu
