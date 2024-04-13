@@ -17,6 +17,10 @@ if(Get-Process -Name vcxsrv,xming -ErrorAction SilentlyContinue){
 $shellBaseName = ([System.Environment]::ProcessPath -split '\\')[-1] -replace '.exe'
 $env:SHELL = $shellBaseName
 
+# make sure we get the hostname from /somewhere/, accounts for cross platform differences between PSv5 vs PSv7 (core)
+if(! $env:COMPUTERNAME){$env:COMPUTERNAME = hostname -s}
+if(! $env:COMPUTERNAME){$env:COMPUTERNAME = [System.Net.Dns]::GetHostEntry([string]$env:computername).HostName}
+
 function global:prompt{
     $curPath = Get-Location
     $split = Get-Item -Path $curPath
@@ -38,7 +42,7 @@ function global:prompt{
         $branch = $null
     }
 
-    Write-Host "$($env:USERNAME)@$($env:COMPUTERNAME)" -ForegroundColor Magenta -NoNewline
+    Write-Host "$($env:USER)@$($env:COMPUTERNAME)" -ForegroundColor Magenta -NoNewline
     Write-Host " : " -ForegroundColor White -NoNewline
     Write-Host "$($friendlyPath)" -ForegroundColor Cyan -NoNewline
     if($branch){Write-Host " ($($branch))" -ForegroundColor Green -NoNewline}
