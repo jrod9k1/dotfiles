@@ -9,6 +9,10 @@ local function basename(s)
     return string.gsub(s, "(.*[/\\])(.*)", "%2")
 end
 
+local PLATFORM_WINDOWS = wezterm.target_triple == "x86_64-pc-windows-msvc"
+local PLATFORM_MACOS = string.find(wezterm.target_triple, "darwin")
+local PLATFORM_LINUX = string.find(wezterm.target_triple, "linux")
+
 local SOLID_LEFT_ARROW = utf8.char(0x30ba)
 local SOLID_LEFT_MOST = utf8.char(0x2588)
 local SOLID_RIGHT_ARROW = utf8.char(0xe0bc)
@@ -27,6 +31,11 @@ local SUP_IDX = {"¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹", "¹
 
 local SUB_IDX = {"₁", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉", "₁₀",
                 "₁₁", "₁₂", "₁₃", "₁₄", "₁₅", "₁₆", "₁₇", "₁₈", "₁₉", "₂₀"}
+
+
+local window_min = ' 󰖰 '
+local window_max = ' 󰖯 '
+local window_close = ' 󰅖 '
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
     if tab.is_active then
@@ -59,6 +68,25 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
         {Text = id},
         {Text = title},
     }
+end)
+
+wezterm.on("update-right-status", function(window, pane)
+    local icon_test = utf8.char(0xe62b)
+
+    window:set_left_status(wezterm.format {
+        { Background = { Color = '#333333' } },
+        { Text = ' ' .. wezterm.pad_right(icon_test, 3) }
+    })
+
+    local title = pane:get_title()
+    local date = ' ' .. wezterm.strftime('%H:%M %d-%m-%Y') .. ' '
+
+    window:set_right_status(wezterm.format {
+        { Background = { Color = '#555555' } },
+        { Text = ' ' .. title .. ' ' },
+        { Background = { Color = '#333333' } },
+        { Text = date },
+    })
 end)
 
 local wezconfig = {
@@ -94,6 +122,28 @@ local wezconfig = {
     warn_about_missing_glyphs = false,
     adjust_window_size_when_changing_font_size = false,
     check_for_updates = false,    
+
+    tab_bar_style = {
+        window_hide = window_min,
+        window_hide_hover = window_min,
+        window_maximize = window_max,
+        window_maximize_hover = window_max,
+        window_close = window_close,
+        window_close_hover = window_close,
+    },
+
+    window_decorations = 'INTEGRATED_BUTTONS | RESIZE',
+
+    window_frame = {
+        border_left_width = '3px',
+        border_right_width = '3px',
+        border_bottom_height = '3px',
+        border_top_height = '3px',
+        border_left_color = 'gray',
+        border_right_color = 'gray',
+        border_bottom_color = 'gray',
+        border_top_color = 'gray',
+    },
 
     -- for some reason it falls back on my machine to the CPU "Software" renderer
     -- which makes typing on maximized 4k windows slow and outputting lots of text
@@ -200,13 +250,16 @@ local wezconfig = {
 }
 
 -- os specifics
-if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+if PLATFORM_WINDOWS then -- windows
     wezconfig.default_prog = {"pwsh"}
 
     table.insert(wezconfig.launch_menu, {label = "WSL", args = {"wsl.exe"}})
 
     table.insert(wezconfig.launch_menu, {label = "PowerShell 7", args = {"pwsh.exe"}})
     table.insert(wezconfig.launch_menu, {label = "PowerShell 5", args = {"powershell.exe"}})
+elseif PLATFORM_MACOS then -- macOS
+    wezconfig.default_prog = {"zsh", "-l"}
+    table.insert(wezconfig.launch_menu, {label = "pwsh", args = {"pwsh"}})
 else
     wezconfig.default_prog = {"/bin/bash", "-l"}
 
