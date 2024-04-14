@@ -1,6 +1,7 @@
 local wezterm = require 'wezterm';
 
 -- TODO: add 
+-- TODO: some kind of mnemonic icons like this along with title https://gist.github.com/gsuuon/5511f0aa10c10c6cbd762e0b3e596b71#file-wezterm-lua-L103
 
 -- equivalent to POSIX basename(3)
 -- given "/foo/bar" returns "bar"
@@ -93,7 +94,7 @@ local wezconfig = {
     font = wezterm.font("PragmataPro Mono Liga"),
     --font = wezterm.font("PragmataPro Mono"),
     --font = pg,
-    font_size = 11.0,
+    font_size = 12.0,
 
     initial_cols = 162,
     initial_rows = 90,
@@ -118,7 +119,7 @@ local wezconfig = {
     -- launch_menu = launch_menu,
 
     use_fancy_tab_bar = false,
-    hide_tab_bar_if_only_one_tab = true,
+    hide_tab_bar_if_only_one_tab = false,
     warn_about_missing_glyphs = false,
     adjust_window_size_when_changing_font_size = false,
     check_for_updates = false,    
@@ -132,17 +133,12 @@ local wezconfig = {
         window_close_hover = window_close,
     },
 
-    window_decorations = 'INTEGRATED_BUTTONS | RESIZE',
+    window_decorations = 'RESIZE',
 
-    window_frame = {
-        border_left_width = '3px',
-        border_right_width = '3px',
-        border_bottom_height = '3px',
-        border_top_height = '3px',
-        border_left_color = 'gray',
-        border_right_color = 'gray',
-        border_bottom_color = 'gray',
-        border_top_color = 'gray',
+    visual_bell = {
+        fade_in_duration_ms = 75,
+        fade_out_duration_ms = 75,
+        target = "CursorColor",
     },
 
     -- for some reason it falls back on my machine to the CPU "Software" renderer
@@ -260,6 +256,8 @@ if PLATFORM_WINDOWS then -- windows
 elseif PLATFORM_MACOS then -- macOS
     wezconfig.default_prog = {"zsh", "-l"}
     table.insert(wezconfig.launch_menu, {label = "pwsh", args = {"pwsh"}})
+
+    wezconfig.font_size = 13.0
 else
     wezconfig.default_prog = {"/bin/bash", "-l"}
 
