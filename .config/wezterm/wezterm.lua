@@ -33,7 +33,6 @@ local SUP_IDX = {"¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹", "¹
 local SUB_IDX = {"₁", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉", "₁₀",
                 "₁₁", "₁₂", "₁₃", "₁₄", "₁₅", "₁₆", "₁₇", "₁₈", "₁₉", "₂₀"}
 
-
 local window_min = ' 󰖰 '
 local window_max = ' 󰖯 '
 local window_close = ' 󰅖 '
@@ -47,21 +46,29 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
         foreground = "#abb2b9"
     end
 
+--    local title = tab.tab_title
+
     local pane_title = tab.active_pane.title
     local process_name = tab.active_pane.foreground_process_name
+    local cur_title = tab.tab_title
     local exec_name = basename(process_name):gsub("%.exe$", "")
 
+    local to_display = cur_title or pane_title
+
+    local title_with_icon
+
     if exec_name == "pwsh" or exec_name == "powershell" then
-        title_with_icon = PS_ICON .. " pwsh"
-    elseif exec_name == "ssh" then
-        title_with_icon = TUX_ICON .. " " .. pane_title
+        title_with_icon = PS_ICON .. to_display
+    elseif exec_name == "ssh" or exec_name == "zsh" then
+        title_with_icon = TUX_ICON .. " " .. to_display
     else
-        title_with_icon = HOURGLASS_ICON .. " " .. exec_name
+        title_with_icon = HOURGLASS_ICON .. " " .. to_display
     end
 
     local id = SUB_IDX[tab.tab_index+1]
 
-    local title = " " .. wezterm.truncate_right(title_with_icon, max_width) .. " "
+--    title = title .. " " .. wezterm.truncate_right(title_with_icon, max_width) .. " "
+    title = " " .. wezterm.truncate_right(title_with_icon, max_width) .. " "
 
     return {
         {Background = {Color = background}},
@@ -73,6 +80,7 @@ end)
 
 wezterm.on("update-right-status", function(window, pane)
     local icon_test = utf8.char(0xe62b)
+    local icon_test = "🤠"
 
     window:set_left_status(wezterm.format {
         { Background = { Color = '#333333' } },
@@ -90,6 +98,14 @@ wezterm.on("update-right-status", function(window, pane)
     })
 end)
 
+-- TODO: need better way to fire this logic on new tabs
+--wezterm.on("gui-startup", function(cmd)
+--    local mux = wezterm.mux
+--    local tab, pane, window = mux.spawn_window(cmd or {})
+--    local icons = { '🌞', '🍧', '🫠', '🏞️', '📑', '🪁', '🧠', '🦥', '🦉', '📀', '🌮', '🍜', '🧋', '🥝', '🍊', }
+--    tab:set_title(' ' .. icons[math.random(#icons)] .. ' ')
+--end)
+
 local wezconfig = {
     font = wezterm.font("PragmataPro Mono Liga"),
     --font = wezterm.font("PragmataPro Mono"),
@@ -98,7 +114,7 @@ local wezconfig = {
 
     initial_cols = 162,
     initial_rows = 90,
-    
+
     -- TODO: clean this shit up
     font_rules = {
         {intensity = "Bold", font = wezterm.font("PragmataPro Mono Liga", {weight = "Bold"})},
@@ -107,22 +123,23 @@ local wezconfig = {
     },
 
     tab_max_width = 30,
-    
+
     -- note that kitty graphics require the use of the "wezterm ssh"
     -- command rather than build in "ssh" due to some weird windows
     -- conhost stuff
     -- (unsure if appliacable to win11)
     enable_kitty_graphics = true,
 
-    launch_menu = {},
-    -- TODO: ???
-    -- launch_menu = launch_menu,
+    launch_menu = {}, -- this needs to be initialized here for some reason
 
     use_fancy_tab_bar = false,
     hide_tab_bar_if_only_one_tab = false,
     warn_about_missing_glyphs = false,
     adjust_window_size_when_changing_font_size = false,
-    check_for_updates = false,    
+    check_for_updates = false,
+
+    window_decorations = 'INTEGRATED_BUTTONS|RESIZE', -- integrate title bar into the terminal, ignore OS bar
+    integrated_title_button_style = "Gnome", -- change OS buttons for our own style
 
     tab_bar_style = {
         window_hide = window_min,
@@ -133,7 +150,13 @@ local wezconfig = {
         window_close_hover = window_close,
     },
 
-    window_decorations = 'RESIZE',
+    -- padding inside the terminal, pushes in TUI
+--    window_padding = {
+--        left = '6px',
+--        right = '6px',
+--        top = '2px',
+--        bottom = 0,
+--    },
 
     visual_bell = {
         fade_in_duration_ms = 75,
@@ -166,6 +189,18 @@ local wezconfig = {
         {key = "LeftArrow",     mods = "CTRL|SHIFT",    action = wezterm.action{ActivateTabRelative = -1}},
 
         {key = "a",             mods = "CTRL|SHIFT",    action = wezterm.action.ShowLauncher},
+
+        {key = "R",             mods = "CMD|SHIFT",     action = wezterm.action.PromptInputLine {
+                description = "Enter title",
+                action = wezterm.action_callback(function(window, _, line)
+                    if line then
+                        window:active_tab():set_title(line)
+                    end
+                end),
+            },
+        },
+
+        {key = "t",             mods = "CMD|SHIFT",      action = wezterm.action.ShowTabNavigator},
     },
 
     foreground_text_hsb = {
