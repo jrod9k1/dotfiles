@@ -5,6 +5,8 @@ cursorline = false
 auto-save = false
 auto-pairs = true
 true-color = true
+line-number = "relative"
+bufferline = "multiple"
 
 [editor.cursor-shape]
 insert = "underline"
@@ -22,3 +24,6 @@ right = ["selections", "primary-selection-length", "position", "position-percent
 
 [editor.indent-guides]
 render = true
+
+[editor.smart-tab]
+enable = false
