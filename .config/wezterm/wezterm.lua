@@ -1,4 +1,6 @@
 local wezterm = require 'wezterm';
+local io = require 'io';
+local os = require 'os';
 
 -- TODO: add 
 -- TODO: some kind of mnemonic icons like this along with title https://gist.github.com/gsuuon/5511f0aa10c10c6cbd762e0b3e596b71#file-wezterm-lua-L103
@@ -9,6 +11,8 @@ local wezterm = require 'wezterm';
 local function basename(s)
     return string.gsub(s, "(.*[/\\])(.*)", "%2")
 end
+
+local MYFONT = "PragmataPro Mono Liga"
 
 local PLATFORM_WINDOWS = wezterm.target_triple == "x86_64-pc-windows-msvc"
 local PLATFORM_MACOS = string.find(wezterm.target_triple, "darwin")
@@ -25,6 +29,13 @@ local TUX_ICON = utf8.char(0xf31a)
 local VIM_ICON = utf8.char(0xe62b)
 local PAGE_ICON = utf8.char(0xf718)
 local HOURGLASS_ICON = utf8.char(0xf252)
+local TREE_ICON = utf8.char(0xf160e)
+local WINDOW_ICON = utf8.char(0xf10ac)
+local HELIX_ICON = utf8.char(0xf0684)
+local ADMIN_ICON = utf8.char(0xf0ecd)
+
+print("Trying to print the icon")
+print(PS_ICON)
 
 -- if it's stupud and it works.. well it's still stupid admittedly
 local SUP_IDX = {"¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹", "¹⁰",
@@ -46,29 +57,40 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
         foreground = "#abb2b9"
     end
 
---    local title = tab.tab_title
-
     local pane_title = tab.active_pane.title
     local process_name = tab.active_pane.foreground_process_name
-    local cur_title = tab.tab_title
+    local tab_title = tab.tab_title
     local exec_name = basename(process_name):gsub("%.exe$", "")
-
-    local to_display = cur_title or pane_title
-
     local title_with_icon
 
-    if exec_name == "pwsh" or exec_name == "powershell" then
-        title_with_icon = PS_ICON .. to_display
-    elseif exec_name == "ssh" or exec_name == "zsh" then
-        title_with_icon = TUX_ICON .. " " .. to_display
+    if tab_title == "" then
+        to_display = pane_title
     else
-        title_with_icon = HOURGLASS_ICON .. " " .. to_display
+        to_display = tab_title
+    end
+
+    -- switch logic
+    if #tab.panes > 1 then
+        title_with_icon = WINDOW_ICON .. "  " .. to_display
+    elseif string.find(pane_title, "admin*") then
+        title_with_icon = ADMIN_ICON .. "  " .. to_display
+    elseif exec_name == "pwsh" or exec_name == "powershell" then
+        title_with_icon = PS_ICON .. "  " .. to_display
+    elseif exec_name == "ssh" then
+        title_with_icon = TUX_ICON .. "  " .. to_display
+    elseif exec_name == "hx" then
+        title_with_icon = HELIX_ICON .. "  " .. to_display
+     elseif exec_name == "vim" then
+        title_with_icon = VIM_ICON .. "  " .. to_display       
+     elseif exec_name == "broot" then
+        title_with_icon = TREE_ICON .. "  " .. to_display       
+    else
+        title_with_icon = HOURGLASS_ICON .. "  " .. to_display
     end
 
     local id = SUB_IDX[tab.tab_index+1]
 
---    title = title .. " " .. wezterm.truncate_right(title_with_icon, max_width) .. " "
-    title = " " .. wezterm.truncate_right(title_with_icon, max_width) .. " "
+    local title = " " .. wezterm.truncate_right(title_with_icon, max_width) .. " "
 
     return {
         {Background = {Color = background}},
@@ -78,7 +100,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
     }
 end)
 
-wezterm.on("update-right-status", function(window, pane)
+wezterm.on("update-status", function(window, pane)
     local icon_test = utf8.char(0xe62b)
     local icon_test = "🤠"
 
@@ -96,6 +118,24 @@ wezterm.on("update-right-status", function(window, pane)
         { Background = { Color = '#333333' } },
         { Text = date },
     })
+end)
+
+wezterm.on("rewind-hx", function(window, pane)
+    local scrollback = pane:get_lines_as_text(10000)
+
+    -- TODO: is os.tmpname ok on windows??
+    local name = os.tmpname()
+    local f = io.open(name, "w+")
+    f:write(scrollback)
+    f:flush()
+    f:close()
+
+    window:perform_action(wezterm.action{SpawnCommandInNewWindow={
+        args = {"hx", name}
+    }}, pane)
+
+    wezterm.sleep_ms(1000)
+    os.remove(name)
 end)
 
 -- TODO: need better way to fire this logic on new tabs
@@ -185,12 +225,15 @@ local wezconfig = {
 
         {key = "t",             mods = "CTRL|SHIFT",    action = wezterm.action{SpawnTab = "CurrentPaneDomain"}},
         {key = "w",             mods = "CTRL|SHIFT",    action = wezterm.action{CloseCurrentTab = {confirm = true}}},
+        {key = "w",             mods = "CTRL|SHIFT",    action = wezterm.action{CloseCurrentTab = {confirm = true}}},
         {key = "RightArrow",    mods = "CTRL|SHIFT",    action = wezterm.action{ActivateTabRelative = 1}},
         {key = "LeftArrow",     mods = "CTRL|SHIFT",    action = wezterm.action{ActivateTabRelative = -1}},
 
         {key = "a",             mods = "CTRL|SHIFT",    action = wezterm.action.ShowLauncher},
+        {key = "t",             mods = "CMD|SHIFT",     action = wezterm.action.ShowTabNavigator},
+        {key = "e",             mods = "CTRL|SHIFT",    action = wezterm.action{EmitEvent="rewind-hx"}}, -- TODO: add the event here
 
-        {key = "R",             mods = "CMD|SHIFT",     action = wezterm.action.PromptInputLine {
+        {key = "R",             mods = "CTRL|SHIFT",    action = wezterm.action.PromptInputLine {
                 description = "Enter title",
                 action = wezterm.action_callback(function(window, _, line)
                     if line then
@@ -200,7 +243,16 @@ local wezconfig = {
             },
         },
 
-        {key = "t",             mods = "CMD|SHIFT",      action = wezterm.action.ShowTabNavigator},
+        {key = "e",              mods = "CTRL|ALT",     action = wezterm.action{QuickSelectArgs={
+            patterns = {
+                "http?://\\S+",
+                "https?://\\S+"
+            },
+            action = wezterm.action_callback(function(window, pane)
+                local url = window:get_selection_text_for_pane(pane)
+                wezterm.open_with(url)
+            end)
+        }}},
     },
 
     foreground_text_hsb = {
