@@ -42,7 +42,7 @@ function global:prompt{
         $branch = $null
     }
 
-    Write-Host "$($env:USER)@$($env:COMPUTERNAME)" -ForegroundColor Magenta -NoNewline
+    Write-Host "$($env:USERNAME)@$($env:COMPUTERNAME)" -ForegroundColor Magenta -NoNewline
     Write-Host " : " -ForegroundColor White -NoNewline
     Write-Host "$($friendlyPath)" -ForegroundColor Cyan -NoNewline
     if($branch){Write-Host " ($($branch))" -ForegroundColor Green -NoNewline}
@@ -99,7 +99,8 @@ if(Get-Module -Name PSReadline){
     $PSReadlineOptions = @{
         HistorySearchCursorMovesToEnd = $true
         ShowToolTips = $true
-        EditMode = "Vi"
+        EditMode = "Emacs"
+        HistoryNoDuplicates = $true # to lighten the load on the history searcher
     }
     
     Set-PSReadLineOption @PSReadlineOptions
@@ -107,6 +108,7 @@ if(Get-Module -Name PSReadline){
     $psrVer = (Get-Module PSReadline).Version
     if($psrVer -ge [version]"2.1"){
         Set-PSReadLineOption -PredictionSource History
+        Set-PSReadLineOption -Colors @{InlinePrediction = "DarkGray"}
     }
     
     Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
@@ -116,6 +118,15 @@ if(Get-Module -Name PSReadline){
     Set-PSReadLineKeyHandler -Key Ctrl+w -Function BackwardDeleteWord
     Set-PSReadLineKeyHandler -Key Ctrl+a -Function BeginningOfLine
     Set-PSReadLineKeyHandler -Key Ctrl+e -Function EndOfLine 
+    Set-PSReadLineKeyHandler -Chord Ctrl+u -Function BackwardKillLine
+    Set-PSReadLineKeyHandler -Chord Ctrl+y -Function Yank
+    Set-PSReadLineKeyHandler -Chord Ctrl+LeftArrow -Function BackwardWord
+    Set-PSReadLineKeyHandler -Chord Ctrl+RightArrow -Function NextWord
+    Set-PSReadLineKeyHandler -Chord Ctrl+Backspace -Function BackwardKillWord
+
+    # standard ps stuff that i was missing
+    Set-PSReadLineKeyHandler -Chord Ctrl+v -Function Paste
+    Set-PSReadLineKeyHandler -Chord Shift+Insert -Function Paste
 
     if(Get-Command -Name fzf -ErrorAction SilentlyContinue){
         Set-PSReadLineKeyHandler -Chord Ctrl+b -BriefDescription "HistorySearch" -LongDescription "Search history with fzf then insert result to readline buffer" -ScriptBlock {
