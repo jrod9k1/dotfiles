@@ -1,4 +1,4 @@
-return {
+return { -- dark high contrast theme
     "iagorrr/noctishc.nvim",
     lazy = false,
     config = function()

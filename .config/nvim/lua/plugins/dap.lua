@@ -1,5 +1,5 @@
 return { -- TODO: might not want this, or refactor for some other stuff
-    {
+    { -- debug adapter protocol
         "mfussenegger/nvim-dap",
         config = function()
             local dap, dapui = require "dap", require "dapui"

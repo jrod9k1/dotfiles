@@ -19,32 +19,21 @@ return {
         lazy = false,
         dependencies = {"echasnovski/mini.icons"},
         opts = function()
-            local snufkin = [[
-
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠄⠒⠊⠉⢱⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠃⠀⠀⠀⡰⢾⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⠁⠀⠀⠈⠉⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⢀⠀⠀⠀⠀⠀⢠⠎⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠒⠢⠤⣷⠒⢾⠂⡡⢒⣦⠒⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⣷⣴⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣥⠀⢰⣋⡩⣴⣿⠎⠣⢶⡏⡖⣰⠠⣦⣠⣧⠤⣴⣂⣞⠙⡏⡸⢛⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠢⡉⠣⢲⣱⣁⡟⣓⠀⣴⣶⢑⣊⣹⡈⣣⣔⠡⠾⢄⠡⣿⠆⣋⣱⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⢀⡄⠀⠀⠀⠀⠀⠀⠀⠀⠈⠑⡦⡋⠛⠿⠥⡖⣸⢀⢦⣼⡴⢂⢙⠋⣌⣙⡥⢞⣰⠦⠜⠫⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠌⢰⠀⠀⠀⠀⠀⡘⡃⣮⢱⣷⠀⠀⠀⠀⠀⠀⠀⠀⢰⢸⣿⡦⢄⡀⠈⠀⠁⠛⠩⠾⠑⠚⢒⠙⢉⡃⡀⠙⣀⠤⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢠⣢⢠⢓⠂⢤⠀⢸⣼⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⢸⠰⢉⡀⢔⠅⠉⢩⣷⣶⠒⠈⡏⠉⠁⠙⡕⣾⣏⡓⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢒⡓⡾⣟⠂⡠⠊⠀⠀⠻⣿⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⢆⠘⠥⣀⡀⠓⡄⠫⣁⠠⠞⠀⠀⠀⣸⡔⠒⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠊⠐⠄⠀⠀⠀⠀⠀⠀⠐⡌⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢄⡢⠄⣉⡁⠀⠀⠀⠀⢀⡠⡖⠁⣀⠤⠒⠂⠉⠉⠉⠐⠒⠤⡀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣾⡆⠀⠀⠀⠀⠀⠀⠀⢀⡤⠊⠔⢁⡝⡖⣷⠲⠶⣮⠹⠖⠋⢸⠊⠀⠀⠀⠀⠀⠀⢱⡀⡀⠀⠈⢠⣦⣸⡿⣀⡀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣸⣼⡇⡆⠀⠀⢽⣷⠒⢤⣾⣦⣄⡠⠊⣑⠕⢁⠔⡱⡌⠈⢿⣰⣤⡦⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⣧⢱⡀⢠⣶⢮⡀⣸⣛⠃⠀
-⠀⠀⠀⠀⠀⠀⠀⢀⡀⡂⡄⢀⡀⡄⢠⠀⠀⠀⠀⣿⣿⣿⣷⠃⢀⢼⠬⠭⡿⣸⣯⢟⠋⣱⣄⠉⠉⠛⠦⠟⠀⠀⠈⠛⠛⠁⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⢸⡄⣧⠀⠀⠸⠿⠙⠿⠃⠀
-⠀⠀⠀⠀⠀⠀⠀⠑⡔⡇⢰⠱⠁⢸⠀⡇⠀⢆⠀⠸⢿⠿⡫⠊⡱⢸⠫⠝⠳⠜⣿⣯⡻⡟⢊⡗⡄⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⢀⠄⡌⠀⠀⠀⠀⠀⠀⢸⡄⠈⣇⢹⡆⠀⠀⡎⠀⡔⢠⠃
-⠀⠀⠀⠀⠀⠀⠈⢆⠃⠃⠈⡗⡀⢸⡆⣿⢠⠸⡄⠀⡼⠊⠀⢠⠁⢸⠀⠀⢀⡠⣪⢿⢛⣚⠿⠃⢛⠀⠀⠀⠀⠀⢀⠔⠊⠀⢀⠎⢀⠃⠀⠀⠀⠀⠀⡄⠀⡼⡀⣿⠸⣷⠀⢠⠇⡼⠀⡞⢀
-⠀⠀⠀⠀⠄⠀⠐⠈⣾⠀⠀⣧⣧⢸⡇⣿⢸⠀⣧⠘⡄⠀⠀⢸⠀⠨⠒⠊⡡⠊⠀⠀⢳⣂⡈⠀⢀⠕⠒⠒⠤⠾⠥⡀⠀⣠⠊⠀⡜⠀⠀⠀⠀⠀⠀⢳⠀⡇⡇⡿⡄⣿⡀⢸⢸⠇⢰⡇⡜
-⠀⠀⠀⢢⠈⡄⠀⡇⢿⡀⢀⡇⢻⢸⣇⡟⣸⠠⠟⣴⣿⣿⣤⠈⠀⠀⠠⠊⠀⠀⠀⠀⠀⠈⠰⠲⡏⡀⠀⠀⠀⠀⠀⠀⠔⠁⠀⢰⠁⠀⠀⠀⠀⠀⠀⢸⡄⡇⢱⣷⡇⢿⡇⣾⣾⠀⢸⢃⡇
-⠀⠀⠀⠀⢣⢸⡄⢷⢸⡿⡧⡇⢸⠘⢨⣧⡁⠀⠀⣨⣽⣿⠟⠉⠁⢈⣽⣄⠀⠀⠀⠀⠀⠀⠀⠇⠐⢌⠑⠢⠤⣀⡀⠀⠀⡀⡰⡁⠠⡀⠀⠀⠀⠀⠀⢸⣇⠇⡏⢻⢸⢸⡇⣿⣿⠀⢸⢸⡇
-⠀⠀⠀⠀⠈⣇⣧⢸⠸⡇⡇⡇⢸⠀⠈⢿⣿⣶⣶⣾⡿⠋⠀⠀⠀⢛⣿⣿⣿⠦⣞⣠⠠⡚⠀⠸⡄⠀⠣⡀⠀⠀⠀⠉⠉⣰⠣⠆⣁⡓⠡⢇⠆⠀⠀⠀⠘⠀⠃⣿⢸⢸⡇⣿⣿⡄⠸⠋⠃
-⠀⠀⠀⠀⠀⢸⣸⣼⡆⠃⠃⣧⠛⠀⠀⠀⠉⠉⠻⣿⣿⣶⣦⣤⣶⡟⠁⠙⠁⠀⠀⠈⠀⢅⡀⠀⠀⠀⠀⠈⠀⠀⠀⢀⠜⠑⢏⢁⠍⣍⣑⠭⠀⣀⣀⡀⠲⠖⠀⡿⠸⢸⡇⠈⠘⠇⠀⠀⠀
-⠀⠀⠀⠀⠀⠈⡏⡇⠃⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠈⠋⠉⢹⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠩⢶⠆⠀⠐⠾⠿⣷⠂⢠⣤⣤⡌⠹⠇⠠⠀⠘⠛⠛⠁⠀⠀⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣤⣴⠆⠀⠀⢀⣀⠀⠺⠿⠟⠀⠠⡶⣶⡗⠀⠀⠀⠓⠶⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            local bigyoshi = [[
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠴⢿⣧⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣧⣆⣘⡄⢹⣿⣷⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⣿⣿⣿⣿⣿⣷⣾⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⢿⣷⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⣴⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣴⣿⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢀⣀⡀⣾⡿⠀⠉⠉⠛⠋⠛⠛⠚⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀
+⠀⠀⠀⢠⣍⠹⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢿⣷⣾⣿⣿⠀⠀⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢹⣟⢻⣿⣄⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠻⠿⠟⠁⠑⢶⣤⣴⣿⣿⣿⣷⣶⣬⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠛⠛⢛⣿⣿⣿⣿⡿⠛⠁⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⢿⡿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀
             ]]
             return {
                 theme = "hyper",
@@ -53,7 +42,7 @@ return {
                     hide = {
                         statusline = false,
                     },
-                    header = vim.split(snufkin, "\n"),
+                    header = vim.split(bigyoshi, "\n"),
                     packages = { enable = false },
                     project = { enable = false },
                     shortcut = {
@@ -151,7 +140,7 @@ return {
             },
         },
     },
-    {
+    { -- fuzzy file finder
         "nvim-telescope/telescope.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -239,5 +228,77 @@ return {
             { "<leader>fn", "<cmd>Telescope noice<cr>", desc = "noice" },
             -- stylua: ignore end
         },
+    },
+    { -- excellent status line, TODO: maybe customize
+        "nvim-lualine/lualine.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            require('lualine').setup()
+        end,
+    },
+    { -- tab thingy for buffers
+        "willothy/nvim-cokeline",
+        dependencies = { "nvim-lua/plenary.nvim", "echasnovski/mini.icons" },
+        config = function()
+            local cokeline = require "cokeline"
+            local get_hex = require("cokeline.hlgroups").get_hl_attr
+            local components = {
+                filename = {
+                    text = function(buf)
+                        return " " .. buf.filename .. " "
+                    end,
+                },
+                modified = {
+                    text = function(buf)
+                        return buf.is_modified and " " or "    "
+                    end,
+                    fg = function(buf)
+                        return buf.is_modified and get_hex("DiagnosticWarn", "fg") or get_hex("Normal", "fg")
+                    end,
+                },
+            }
+            cokeline.setup {
+                show_if_buffers_are_at_least = 1,
+                buffers = {
+                    filter_valid = function(buf)
+                        return buf.is_modified
+                    end,
+                },
+                components = { components.filename, components.modified },
+            }
+        end,
+    },
+    { -- quickly tab thru open buffers
+        "ghillb/cybu.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "echasnovski/mini.icons" },
+        config = function()
+            require("cybu").setup {
+                behavior = {
+                    mode = {
+                        last_used = {
+                            switch = "immediate",
+                            view = "rolling",
+                        },
+                    },
+                    display_time = 250,
+                },
+            }
+        end,
+        keys = {
+            -- stylua: ignore start
+            { "<tab>", function() require("cybu").cycle "next" end, mode = { "n", "v" }, desc = "cybu - next" },
+            { "<s-tab>", function() require("cybu").cycle "prev" end, mode = { "n", "v" }, desc = "cybu - prev" },
+            -- stylua: ignore end
+        },
+        event = "BufRead",
+    },
+    { -- small little window for selecting buffers
+        "leath-dub/snipe.nvim",
+        keys = {
+            -- stylua: ignore start
+            { "<leader><tab>", function() require("snipe").open_buffer_menu() end, desc = "snipe buffer menu" },
+            -- stylua: ignore end
+        },
+        opts = {},
     },
 }

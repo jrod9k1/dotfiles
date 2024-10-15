@@ -33,7 +33,6 @@ return {
                 return nil
             end
 
-            cmp.register_source("easy-dotnet", require("easy-dotnet").package_completion_source)
 
             cmp.setup {
                 enabled = function()

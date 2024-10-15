@@ -7,7 +7,7 @@ local servers = {
 
 -- TODO: figure out how this works and how to hook in python
 
-return {
+return { -- prebuilt lspconfigs, autoinstall
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()

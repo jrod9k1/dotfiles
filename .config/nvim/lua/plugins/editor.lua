@@ -1,5 +1,5 @@
 return {
-    {
+    { -- awesome mark manager kinda like harpoon but better imo
         "otavioschwanck/arrow.nvim",
         opts = {
             show_icons = true,
@@ -59,7 +59,7 @@ return {
             },
         },
     },
-    {
+    { -- highlight color codes
         "brenoprata10/nvim-highlight-colors",
         config = function()
             require("nvim-highlight-colors").setup {
@@ -199,7 +199,7 @@ return {
             },
         },
     },
-    {
+    { -- dim inactive portions of code while editing, TODO: look into how to activate
         "folke/twilight.nvim",
         event = "BufReadPre",
         opts = {
