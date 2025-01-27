@@ -86,23 +86,21 @@ return {
         event = "ColorScheme",
         cmd = "ToggleTerm",
         config = function()
-            -- TODO: fix this to work with high contrast
-            --
             --local highlights = require "rose-pine.plugins.toggleterm"
-            --require("toggleterm").setup {
-            --    highlights = highlights,
-            --    direction = "float",
-            --    shade_terminals = false,
-            --    float_opts = {
-            --        width = function()
-            --            return math.ceil(vim.o.columns * 0.5)
-            --        end,
-            --        height = function()
-            --            return math.ceil(vim.o.lines * 0.5)
-            --        end,
-            --        winblend = 0,
-            --    },
-            --}
+            require("toggleterm").setup {
+                --highlights = highlights,
+                direction = "float",
+                shade_terminals = false,
+                float_opts = {
+                    width = function()
+                        return math.ceil(vim.o.columns * 0.5)
+                    end,
+                    height = function()
+                        return math.ceil(vim.o.lines * 0.5)
+                    end,
+                    winblend = 0,
+                },
+            }
         end,
         keys = function(_, keys)
             local function toggleterm()

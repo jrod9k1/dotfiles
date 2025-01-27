@@ -6,7 +6,7 @@ local g = vim.g -- globals
 g.mapleader = " "
 g.maplocalleader = ","
 
-opt.clipboard = "unnamedplus" -- map clipboard to OS lvl
+--opt.clipboard = "unnamedplus" -- map clipboard to OS lvl
 opt.cursorline = true -- set a line under line w cursor
 
 opt.showtabline = 2 -- always show file tab line
