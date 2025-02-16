@@ -1,0 +1,15 @@
+[language-server.powershell_es]
+command = "pwsh"
+args = ["-NoLogo", "-NoProfile", "-Command", "C:\\tools\\pwsh_es\\PowerShellEditorServices\\Start-EditorServices.ps1 -BundledModulesPath C:\\tools\\pwsh_es\\ -SessionDetailsPath C:\\tools\\pwsh_es\\PowerShellEditorServices\\powershell_es.sessions.json -LogPath C:\\tools\\pwsh_es\\PowerShellEditorServices\\powershell_es.log -HostName helix -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal"
+
+[[language]]
+name = "powershell"
+scope = "scope.powershell"
+injection-regex = "(pwsh|powershell)"
+roots = [ ".git", ".p4", ".p4config" ]
+file-types = [ "ps1", "psm1", "psd1", "pscc", "psrc" ]
+shebangs = [ "pwsh", "powershell" ]
+block-comment-tokens = { start = "<#", end = "#>" }
+comment-token = "#"
+indent = { tab-width = 4, unit = "    " }
+language-servers = ["powershell_es"]
