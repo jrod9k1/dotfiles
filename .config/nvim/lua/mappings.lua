@@ -20,6 +20,12 @@ map.set("n", "<C-A-Right>", "<C-w>l", { noremap = true, silent = true, desc = "m
 map.set("n", "<C-w>%", ":vsplit<CR>", { noremap = true, silent = true, desc = "split vertical" })
 map.set("n", '<C-w>"', ":split<CR>", { noremap = true, silent = true, desc = "split horizontal" })
 
+-- resize splits?
+map.set("n", "<M-,>", "<c-w>5<")
+map.set("n", "<M-.>", "<c-w>5>")
+map.set("n", "<M-t>", "<C-W>+")
+map.set("n", "<M-s>", "<C-W>-")
+
 -- allow moving the cursor through wrapped lines with j, k, up, down
 map.set(
     { "n", "v" },
