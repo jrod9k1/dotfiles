@@ -2,8 +2,8 @@ local map = vim.keymap
 
 
 -- clipboard keys
-map.set("n", "<leader>y", '"+y', { noremap = true, silent = true, desc = "copy to clipboard" })
-map.set("n", "<leader>p", '"+p', { noremap = true, silent = true, desc = "paste from clipboard" })
+map.set({"n", "v"}, "<leader>y", '"+y', { noremap = true, silent = true, desc = "copy to clipboard" })
+map.set({"n", "v"}, "<leader>p", '"+p', { noremap = true, silent = true, desc = "paste from clipboard" })
 
 -- buffers
 map.set("n", "<leader>bn", "<cmd> enew <cr>", { desc = "new buffer" })
