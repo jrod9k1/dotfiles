@@ -842,3 +842,44 @@ $env.config = {
 
 use ~/.config/nushell/starship.nu
 source ~/.config/nushell/atuin.nu
+
+# trying to replicate zshrc
+
+# kinda overly verbose
+$env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.scripts/bin")
+
+$env.LANG = "en_US.UTF-8"
+$env.EDITOR = "hx"
+$env.TERM = "xterm-256color"
+$env.COLORTERM = "24bit"
+$env.HOMEBREW_NO_AUTO_UPDATE = 1
+
+# aliases
+alias showtime = python -m SimpleHTTPServer
+alias weather = curl wttr.in/Philadelphia
+alias weatherserver = telnet rainmaker.wunderground.com
+
+alias heroute = telnet route-server.he.net
+alias attroute = telnet route-server.ip.att.net
+#alias ports = lsof -n -i4TCP | grep LISTEN
+alias l = lsd -lah
+alias ll = ls -lah
+alias ipinfo = curl ipinfo.io
+alias g = git
+alias hb = ^du -sh
+alias hba = ^du -sh \*
+alias become = sudo -s -u
+alias whicos = cat /etc/*release*
+#alias toptenproc = ^ps aux --sort=-pcpu | head -n11
+alias psa = ^ps axo user:20,pid,pcpu,pmem,vsz,rss,tty,stat,start,time,comm,command
+alias f = fzf --bind 'f1:become(nvim {1})'
+alias coa = conda activate
+alias cod = conda deactivate
+alias k = kubectl
+alias psa = ^ps axo user:20,pid,pcpu,pmem,vsz,rss,tty,stat,start,time,comm,command
+alias ps = ^ps # we don't like the internal PS, just override it to use the OS version
+
+#alias cfggit = git --git-dir=($env.HOME)/.cfg/ --work-tree=($env.HOME)
+alias cfggit = git $'--git-dir=($env.HOME)/.cfg/' $'--work-tree=($env.HOME)'
+
+alias br = broot
