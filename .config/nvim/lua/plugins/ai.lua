@@ -1,5 +1,5 @@
 return {
-  {
+  { -- adapter to connect to copilot
     "zbirenbaum/copilot.lua",
     opts = {
       suggestion = {
@@ -10,7 +10,7 @@ return {
       },
     },
   },
-  {
+  { -- lots of good tools for interfacing with LLMs
     "olimorris/codecompanion.nvim",
     event = "BufEnter",
     dependencies = {
