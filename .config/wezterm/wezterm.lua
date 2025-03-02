@@ -208,6 +208,9 @@ local wezconfig = {
     -- which makes typing on maximized 4k windows slow and outputting lots of text
     -- in tmux windows VERY slow
     front_end = "OpenGL",
+    -- TODO: try this eventually?
+    -- front_end = "WebGpu"
+    -- webgpu_power_preference = "HighPerformance"
 
     -- tmux like keys for panes
     leader = {key = "s", mods = "CTRL"},
@@ -215,10 +218,10 @@ local wezconfig = {
         {key = '"',             mods = "LEADER|SHIFT",  action = wezterm.action{SplitVertical = {domain = "CurrentPaneDomain"}}},
         {key = "%",             mods = "LEADER|SHIFT",  action = wezterm.action{SplitHorizontal = {domain = "CurrentPaneDomain"}}},
 
-        {key = "LeftArrow",     mods = "ALT",           action = wezterm.action{ActivatePaneDirection = "Left"}},
-        {key = "RightArrow",    mods = "ALT",           action = wezterm.action{ActivatePaneDirection = "Right"}},
-        {key = "DownArrow",     mods = "ALT",           action = wezterm.action{ActivatePaneDirection = "Down"}},
-        {key = "UpArrow",       mods = "ALT",           action = wezterm.action{ActivatePaneDirection = "Up"}},
+        {key = "LeftArrow",     mods = "ALT|SHIFT",           action = wezterm.action{ActivatePaneDirection = "Left"}},
+        {key = "RightArrow",    mods = "ALT|SHIFT",           action = wezterm.action{ActivatePaneDirection = "Right"}},
+        {key = "DownArrow",     mods = "ALT|SHIFT",           action = wezterm.action{ActivatePaneDirection = "Down"}},
+        {key = "UpArrow",       mods = "ALT|SHIFT",           action = wezterm.action{ActivatePaneDirection = "Up"}},
 
         {key = "z",             mods = "LEADER",        action = "TogglePaneZoomState"},
         {key = "x",             mods = "LEADER",        action = wezterm.action{CloseCurrentPane={confirm = true}}},
