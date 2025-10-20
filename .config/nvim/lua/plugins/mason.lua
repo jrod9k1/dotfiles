@@ -25,12 +25,13 @@ return { -- a package manager for installing LSPs
 
     mason_lspconfig.setup {
       ensure_installed = {
-        "eslint",
         "lua_ls",
         "jsonls",
         "yamlls",
         "powershell_es",
         "marksman",
+        "ruff",
+        "pyright",
       },
     }
 
@@ -38,9 +39,7 @@ return { -- a package manager for installing LSPs
       ensure_installed = {
         "prettier", -- prettier formatter
         "stylua", -- lua formatter
-        "csharpier", -- c# formatter
         "netcoredbg", -- c# debugger
-        "xmlformatter", -- xml formatter
       },
     }
   end,
