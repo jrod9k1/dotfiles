@@ -219,4 +219,16 @@ return {
             { "<Leader>z", "<cmd>ZenMode<cr>", desc = "zen mode" },
         },
     },
+    {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+            require("treesitter-context").setup {
+                enable = true,
+                line_numbers = true,
+                multiline_threshold = 20,
+                trim_scope = "outer",
+                mode = "cursor",
+            }
+        end
+    },
 }
