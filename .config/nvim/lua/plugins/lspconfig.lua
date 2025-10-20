@@ -55,6 +55,66 @@ return { -- prebuilt lspconfigs, autoinstall
                 enableProfileLoading = false,
             },
         }
+
+        lspconfig.ruff.setup {
+            init_options = {
+                settings = {
+                    enable = true,
+                    lineLength = 120,
+                    showSyntaxErrors = true,
+                    lint = {
+                        enable = true,
+                        run = "onType",
+                        select = {
+                            "E",    -- pycodestyle errors
+                            "W",    -- pycodestyle warnings
+                            "F",    -- pyflakes
+                            "N",    -- PEP8 naming
+                            "B",    -- flake8 bugbear
+                            "A",    -- flake8 shawdowing builtins
+                            "PL",   -- pylint
+                            "COM",  -- flake8 commas
+                            "DTZ",  -- flake8 datetime stuff
+                            "EM",   -- flake8 error messages
+                            "FIX",  -- FIXMEs, TODOs, etc
+                            "ICN",  -- flake8 import conventions
+                            "LOG",  -- flake8 logging
+                            "G",    -- flake8 logging format
+                            "INP",  -- flake8 implicit namespace
+                            "PIE",  -- flake8 misc
+                            "T20",  -- flake8 discourage print statements
+                            "Q",    -- flake8 quotes
+                            "RSE",  -- flake8 raise
+                            "SLF",  -- flake8 self
+                            "SIM",  -- flake8 simplifiy
+                            "TID",  -- flake8 tidy imports
+                            "TD",   -- flake8 TODOs
+                            "ARG",  -- flake8 arguments
+                            "FLY",  -- flynt
+                            "C90",  -- check for high "McCabe Complexity"
+                            "ERA",  -- commented out code
+                            "S",    -- flake8 bandit
+                            --"RET",  -- flake8 return
+                            --"D",    -- pydocstyle
+                        },
+                        ignore = {},
+                    },
+                }
+            }
+        }
+
+        lspconfig.pyright.setup {
+            settings = {
+                python = {
+                    analysis = {
+                        autoSearchPaths = true,
+                        diagnosticMode = "openFilesOnly",
+                        useLibraryCodeForTypes = true,
+                    }
+                }
+            }
+        }
+
     end,
     keys = {
         -- stylua: ignore start
