@@ -21,6 +21,7 @@ if($localAdminCheck){
     Remove-Item -Recurse -Force -Path "$env:APPDATA\dystroy"
     New-Item -Path "$env:APPDATA" -Name "dystroy" -ItemType Directory -Force
     New-Item -Path "$env:APPDATA\dystroy\" -Name "broot" -ItemType SymbolicLink -Value "$HOME\.config\broot"
+    New-Item -Path "$env:LOCALAPPDATA\" -Name "nvim" -ItemType SymbolicLink -Value "$HOME\.config\nvim"
 } else{
     Write-Error "This script must be run with local admin rights to symlink the alacritty config. Otherwise you must copy or symlink it manually."
 }
