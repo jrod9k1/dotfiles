@@ -78,6 +78,7 @@ alias cod="conda deactivate"
 alias k="kubectl"
 alias psa="ps axo user:20,pid,pcpu,pmem,vsz,rss,tty,stat,start,time,comm,command"
 alias nixdirstat="duc index .; duc graph . -o - -f svg | rsvg-convert | imgcat"
+alias trustfile="xattr -dr com.apple.quarantine"
 
 alias cfggit='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
@@ -172,9 +173,25 @@ function livefind(){
   --bind 'f6:execute(git diff --color=always {1} | less -r)'
 }
 
-fingerprint(){
+fingerprint() {
   ssh-keyscan $1 | ssh-keygen -E md5 -l -f -
 }
+
+# inject arbitrary string into prompt
+writecmd() {
+    perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do {chomp($_ = <>); $_ }' ;
+}
+
+# scrub bash history, throw into fzf, then inject selection into buffer
+# useful for quickly picking things out of history on the fly
+rewindr() {
+    history | tac | fzf --no-sort | cut -c 8- | writecmd
+}
+
+#bind '"C-b":"rewindr\n"'
+
+zle -N rewindr
+bindkey '^b' rewindr
 
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
@@ -213,4 +230,3 @@ function br {
     fi
 }
 
-export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
