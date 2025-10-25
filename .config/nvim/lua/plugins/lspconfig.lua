@@ -21,6 +21,8 @@ return { -- prebuilt lspconfigs, autoinstall
             }
         end
 
+        local util = require("lspconfig.util")
+
         vim.lsp.config.vtsls = {
             on_attach = on_attach,
             capabilities = capabilities,
