@@ -13,41 +13,27 @@ return { -- prebuilt lspconfigs, autoinstall
     config = function()
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        local lspconfig = require "lspconfig"
         for _, lsp in ipairs(servers) do
-            lspconfig[lsp].setup {
+            vim.lsp.config[lsp] = {
                 on_attach = on_attach,
                 capabilities = capabilities,
+                -- add other settings here
             }
         end
 
-        lspconfig.vtsls.setup {
+        vim.lsp.config.vtsls = {
             on_attach = on_attach,
             capabilities = capabilities,
-            root_dir = lspconfig.util.root_pattern "package.json",
+            root_dir = util.root_pattern "package.json",
         }
 
-        lspconfig.denols.setup {
+        vim.lsp.config.denols = {
             on_attach = on_attach,
             capabilities = capabilities,
-            root_dir = lspconfig.util.root_pattern "deno.json",
+            root_dir = util.root_pattern "deno.json",
         }
 
-        -- lspconfig.omnisharp.setup {
-        --     on_attach = on_attach,
-        --     capabilities = capabilities,
-        --     cmd = { vim.fn.stdpath "data" .. "/mason/bin/omnisharp.cmd" },
-        --     enable_ms_build_load_projects_on_demand = false,
-        --     enable_editorconfig_support = true,
-        --     enable_roslyn_analysers = true,
-        --     enable_import_completion = true,
-        --     organize_imports_on_format = true,
-        --     enable_decompilation_support = true,
-        --     analyze_open_documents_only = false,
-        --     filetypes = { "cs", "vb", "csproj", "sln", "slnx", "props", "csx", "targets" },
-        -- }
-
-        lspconfig.powershell_es.setup {
+        vim.lsp.config.powershell_es = {
             on_attach = on_attach,
             capabilities = capabilities,
             bundle_path = vim.fn.stdpath "data" .. "/mason/packages/powershell-editor-services",
@@ -56,7 +42,7 @@ return { -- prebuilt lspconfigs, autoinstall
             },
         }
 
-        lspconfig.ruff.setup {
+        vim.lsp.config.ruff = {
             init_options = {
                 settings = {
                     enable = true,
@@ -103,7 +89,7 @@ return { -- prebuilt lspconfigs, autoinstall
             }
         }
 
-        lspconfig.pyright.setup {
+        vim.lsp.config.pyright = {
             settings = {
                 python = {
                     analysis = {
