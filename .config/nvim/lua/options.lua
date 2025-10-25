@@ -33,8 +33,5 @@ opt.splitright = true
 opt.termguicolors = true
 
 opt.list = true
--- TODO: maybe setup listchars
 
--- TODO: vim.diagnostic.config ???
-
-
+opt.scrolloff = 3
