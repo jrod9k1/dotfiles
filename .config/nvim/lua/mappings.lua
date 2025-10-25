@@ -54,3 +54,12 @@ map.set(
     'v:count || mode(1)[0:1] == "no" ? "j" : "gj"',
     { expr = true, desc = "move down through wrapped lines" }
 )
+
+vim.cmd([[
+  let g:fugitive_no_maps = 1
+  command! -bang -nargs=* G exe 'edit fugitive://' . getcwd() . '/.git//' . <q-args>
+]])
+
+vim.cmd([[
+  command! -bang -nargs=* Git exe 'edit fugitive://' . getcwd() . '/.git//' . <q-args>
+]])
